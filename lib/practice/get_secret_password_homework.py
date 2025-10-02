@@ -12,7 +12,7 @@ import requests
 #1 --- --- --- --- ---
 #2 --- --- --- --- ---
 list_pass = []
-with open('top_25_most_pass', 'r', encoding='utf-8') as file:
+with open('../../top_25_most_pass', 'r', encoding='utf-8') as file:
     lines = file.readlines()
     for line in lines[1:]:
         words = line.split()

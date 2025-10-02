@@ -4,7 +4,7 @@ from requests import Response
 
 class BaseCase:
     def get_cookie (self, response: Response,cookie_name):
-        assert "auth_sid" in response.cookies, f"Cannot find cookies with the name {cookie_name} in the last response"
+        assert cookie_name in response.cookies, f"Cannot find cookies with the name {cookie_name} in the last response"
         return response.cookies[cookie_name]
     def get_header (self, response: Response,header_name):
         assert header_name in response.headers, f"Cannot find headers with the name {header_name} in the last response"
@@ -13,7 +13,7 @@ class BaseCase:
         try:
             response_as_dict = response.json()
         except json.decoder.JSONDecoderError:
-            assert False, f"Response isnot JSON Format. Response text is {response.text}"
+            assert False, f"Response is not JSON Format. Response text is {response.text}"
 
         assert name in response_as_dict, f"Response JSON doesn't have key '{name}'"
 

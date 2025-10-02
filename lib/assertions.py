@@ -12,3 +12,6 @@ class Assertions:
 
         assert name in response_as_dict, f"Response JSON doesn't have key '{name}'"
         assert response_as_dict[name] == expected_value, error_massage
+
+    def assert_get_method(response: Response, _value, expected_value, error_massage):
+        assert _value == expected_value, error_massage

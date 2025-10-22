@@ -33,7 +33,6 @@ class TestUserDelete(BaseCase):
         Assertions.assert_json_has_key(response1, 'id')
 
         email = register_data['email']
-        first_name = register_data['firstName']
         password = register_data['password']
         user_id = self.get_json_value(response1, "id")
 
@@ -47,7 +46,6 @@ class TestUserDelete(BaseCase):
         token = self.get_header(response2, "x-csrf-token")
 
         # delete
-        new_name = "Changed Name"
         response3 = MyRequests.delete(f"/user/{user_id}",
                                    headers={"x-csrf-token": token},
                                    cookies={"auth_sid": auth_sid}
@@ -71,9 +69,7 @@ class TestUserDelete(BaseCase):
         Assertions.assert_status_code(response1, 200)
         Assertions.assert_json_has_key(response1, 'id')
 
-        email = register_data['email']
-        first_name = register_data['firstName']
-        password = register_data['password']
+
         user_id = self.get_json_value(response1, "id")
 
         # login

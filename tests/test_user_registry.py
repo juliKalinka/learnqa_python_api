@@ -3,14 +3,6 @@ import pytest
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from datetime import datetime
-import random
-import string
-
-
-def generate_random_string(length):
-    characters = string.ascii_letters + string.digits
-    random_string = ''.join(random.choice(characters) for _ in range(length))
-    return random_string
 
 
 class TestUserRegistry(BaseCase):
@@ -121,7 +113,7 @@ class TestUserRegistry(BaseCase):
 
 
     def test_create_user_with_large_name(self):
-        name = generate_random_string(251)
+        name = self.generate_random_string(251)
         data = {
             'username': name,
             'firstName': 'learnqa',

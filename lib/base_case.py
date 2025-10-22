@@ -1,6 +1,8 @@
 import json.decoder
 from requests import Response
 from datetime import datetime
+import random
+import string
 
 
 class BaseCase:
@@ -33,3 +35,8 @@ class BaseCase:
             'email': email,
             'password': '123'
         }
+
+    def generate_random_string(self,length):
+        characters = string.ascii_letters + string.digits
+        random_string = ''.join(random.choice(characters) for _ in range(length))
+        return random_string

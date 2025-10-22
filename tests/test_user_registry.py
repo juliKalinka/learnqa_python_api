@@ -28,13 +28,7 @@ class TestUserRegistry(BaseCase):
         self.email = f"{base_part}{random_part}@{domain}"
 
     def test_create_user_successfully(self):
-         data = {
-            'username': 'learnqa',
-            'firstName': 'learnqa',
-            'lastName': 'learnqa',
-            'email': self.email,
-            'password': '123'
-         }
+         data = self.prepare_registration()
          response = requests.post('https://playground.learnqa.ru/api/user/', data=data)
          Assertions.assert_status_code(response, 200)
          Assertions.assert_json_has_key(response, 'id')
@@ -42,13 +36,8 @@ class TestUserRegistry(BaseCase):
 
     def test_create_user_with_existing_email(self):
         email = 'vinkotov@example.com'
-        data = {
-            'username': 'learnqa',
-            'firstName': 'learnqa',
-            'lastName': 'learnqa',
-            'email': email,
-            'password': '123'
-        }
+        data = self.prepare_registration(email)
+
         response = requests.post('https://playground.learnqa.ru/api/user/', data=data)
         Assertions.assert_status_code(response, 400)
         assert response.content.decode("utf-8") == f"Users with email '{email}' already exists", \
@@ -56,13 +45,9 @@ class TestUserRegistry(BaseCase):
 
 
     def test_create_user_with_email_without_commercial_at(self):
-        data = {
-            'username': 'learnqa',
-            'firstName': 'learnqa',
-            'lastName': 'learnqa',
-            'email': self.email.replace('@',''),
-            'password': '123'
-        }
+        error_email = self.email.replace('@','')
+        data = self.prepare_registration(error_email)
+
         response = requests.post('https://playground.learnqa.ru/api/user/', data=data)
         #print(response.content)
         #print(response.status_code)

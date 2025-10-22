@@ -15,7 +15,7 @@ class Assertions:
         assert received_valie == expected_value, f"{error_massage} Received value is equal '{received_valie}'"
 
     @staticmethod
-    def assert_json_has_keys(response: Response, name):
+    def assert_json_has_key(response: Response, name):
         try:
             response_as_dict = response.json()
         except json.JSONDecodeError:

@@ -1,4 +1,8 @@
 import requests
+
+from lib.logger import Logger
+
+
 class MyRequests():
     @staticmethod
     def post (url:str,data:dict=None,headers:dict=None,cookies:dict=None):
@@ -18,6 +22,7 @@ class MyRequests():
             headers = {}
         if cookies is None:
             cookies = {}
+        Logger.add_request(url,data,headers,cookies,method)
 
         if method == 'GET':
             resource = requests.get(url,params=data,headers=headers,cookies=cookies)
@@ -29,5 +34,7 @@ class MyRequests():
             resource = requests.delete(url, data=data, headers=headers, cookies=cookies)
         else:
             raise Exception(f"Bad http method '{method}' was received")
+
+        Logger.add_responce(resource)
 
         return resource

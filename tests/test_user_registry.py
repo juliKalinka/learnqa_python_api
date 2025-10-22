@@ -3,6 +3,7 @@ import pytest
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from datetime import datetime
+from lib.my_requests import MyRequests
 
 
 class TestUserRegistry(BaseCase):
@@ -21,7 +22,7 @@ class TestUserRegistry(BaseCase):
 
     def test_create_user_successfully(self):
          data = self.prepare_registration()
-         response = requests.post('https://playground.learnqa.ru/api/user/', data=data)
+         response = MyRequests.post('/user/', data=data)
          Assertions.assert_status_code(response, 200)
          Assertions.assert_json_has_key(response, 'id')
          print(response.content)
@@ -30,7 +31,7 @@ class TestUserRegistry(BaseCase):
         email = 'vinkotov@example.com'
         data = self.prepare_registration(email)
 
-        response = requests.post('https://playground.learnqa.ru/api/user/', data=data)
+        response = MyRequests.post('/user/', data=data)
         Assertions.assert_status_code(response, 400)
         assert response.content.decode("utf-8") == f"Users with email '{email}' already exists", \
             f"Unexpected response context {response.content}"
@@ -40,7 +41,7 @@ class TestUserRegistry(BaseCase):
         error_email = self.email.replace('@','')
         data = self.prepare_registration(error_email)
 
-        response = requests.post('https://playground.learnqa.ru/api/user/', data=data)
+        response = MyRequests.post('/user/', data=data)
         #print(response.content)
         #print(response.status_code)
         Assertions.assert_status_code(response, 400)
@@ -87,7 +88,7 @@ class TestUserRegistry(BaseCase):
                 }
             case _:
                 assert "Unknown params"
-        response = requests.post('https://playground.learnqa.ru/api/user/', data = data)
+        response = MyRequests.post('/user/', data = data)
         #print(without_params_create)
         #print(response.content)
         #print(response.status_code)
@@ -103,7 +104,7 @@ class TestUserRegistry(BaseCase):
             'email': self.email,
             'password': '123'
         }
-        response = requests.post('https://playground.learnqa.ru/api/user/', data=data)
+        response = MyRequests.post('/user/', data=data)
         #print(response.content)
         #print(response.status_code)
         Assertions.assert_status_code(response, 400)
@@ -121,7 +122,7 @@ class TestUserRegistry(BaseCase):
             'email': self.email,
             'password': '123'
         }
-        response = requests.post('https://playground.learnqa.ru/api/user/', data=data)
+        response = MyRequests.post('/user/', data=data)
         #print(name)
         #print(response.content)
         #print(response.status_code)

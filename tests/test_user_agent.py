@@ -47,8 +47,8 @@ class TestUserAgent(BaseCase):
                              )
     def test_get_user_agent(self, user_agent, platform, browser, device):
         headers = {"User-Agent": user_agent}
-        response = requests.get(
-            "https://playground.learnqa.ru/ajax/api/user_agent_check",
+        response = MyRequests.get(
+            "/user_agent_check",
             headers=headers)
         self.platform = self.get_json_value(response,"platform")
         print("self.platform",self.platform)

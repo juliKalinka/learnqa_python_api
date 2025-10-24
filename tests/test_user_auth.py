@@ -3,7 +3,8 @@ import pytest
 from lib.base_case import BaseCase
 from lib.assertions import Assertions
 from lib.my_requests import MyRequests
-
+import allure
+@allure.epic("Autorization cases")
 class TestUserAuth(BaseCase):
     exclude_params = [
         ("no_cookie"),
@@ -21,7 +22,7 @@ class TestUserAuth(BaseCase):
         self.token = self.get_header(response1, "x-csrf-token")
 
         self.user_id_from_auth_method = self.get_json_value(response1, "user_id")
-
+    @allure.description("This test succssesfully autorize by email and password")
     def test_user_auth(self):
         response2 = MyRequests.get(
            "/user/auth",
@@ -35,6 +36,7 @@ class TestUserAuth(BaseCase):
            "User id from method is not equal to user is from check method"
         )
 
+    @allure.description("This test negaive without params")
     @pytest.mark.parametrize("condition", exclude_params)
     def test_negativ_auth_check(self, condition):
         if condition == "no_cookies":
@@ -53,6 +55,4 @@ class TestUserAuth(BaseCase):
             0,
             f"User is authorized with condition {condition}"
         )
-    def test_check_len_15_phrase(self):
-        phrase = input("Set a phrase less then 15 simbols: ")
-        assert len(phrase) >= 15, f"Input phrase more then 15 simbols or equal"
+

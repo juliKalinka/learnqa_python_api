@@ -1,8 +1,8 @@
 import os
 
 class Environment:
-    DEV='dev'
-    PROD='prod'
+    DEV = 'dev'
+    PROD = 'prod'
 
     URLS = {
         DEV: 'https://playground.learnqa.ru/api_dev',
